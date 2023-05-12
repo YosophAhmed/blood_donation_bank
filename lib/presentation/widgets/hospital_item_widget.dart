@@ -1,10 +1,10 @@
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:donation/data/models/hospital_model.dart';
 import 'package:donation/presentation/widgets/user_info_row_widget.dart';
 
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/app_colors.dart';
-import '../../data/models/hospital_model.dart';
 
 class HospitalItem extends StatelessWidget {
   final VoidCallback onPressed;

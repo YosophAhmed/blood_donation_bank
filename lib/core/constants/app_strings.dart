@@ -118,4 +118,6 @@ class AppStrings {
     'AB-',
     'لا أعلم',
   ];
+
+  static const String baseUrl = 'https://project-blood.onrender.com/api/v1/';
 }

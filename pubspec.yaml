@@ -43,6 +43,7 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   shared_preferences:
   dartz:
+  dio: 
 
 dev_dependencies:
 

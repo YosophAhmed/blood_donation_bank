@@ -1,7 +1,7 @@
+import 'package:donation/data/models/hospital_model.dart';
 import 'package:donation/presentation/widgets/user_info_row_widget.dart';
 import 'package:flutter/material.dart';
 
-import '../../data/models/hospital_model.dart';
 import 'custom_card.dart';
 import 'horizontal_card_divider_widget.dart';
 import 'left_card_side_widget.dart';

@@ -1,10 +1,10 @@
 import 'package:donation/core/styles/text_styles.dart';
+import 'package:donation/data/models/hospital_model.dart';
 
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_strings.dart';
-import '../../data/models/hospital_model.dart';
 import '../widgets/buttom_up-container_widget.dart';
 import '../widgets/custom_button_widget.dart';
 import '../widgets/custom_text_form_field.dart';
