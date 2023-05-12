@@ -18,8 +18,9 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => HomeCubit(),
-      child: BlocBuilder<HomeCubit, HomeState>(
+      create: (BuildContext context) => HomeCubit()..getAllHospitals(),
+      child: BlocConsumer<HomeCubit, HomeState>(
+        listener: (context, state) {},
         builder: (context, state) {
           var cubit = BlocProvider.of<HomeCubit>(context);
           const List<Widget> bodies = [

@@ -49,10 +49,10 @@ class HospitalItem extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                hospitalModel.hospitalName,
+                'مستشفى ${hospitalModel.hospitalName}',
                 style: const TextStyle(
                   color: Colors.black,
-                  fontSize: 18,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
                 textDirection: TextDirection.rtl,

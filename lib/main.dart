@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 
 import 'core/styles/app_themes.dart';
 
-void main() {
+void main() async {
   runApp(const DonationApp());
 }
 

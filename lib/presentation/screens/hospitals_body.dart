@@ -1,7 +1,11 @@
+import 'package:donation/presentation/manger/home_manger/home_cubit.dart';
+import 'package:donation/presentation/manger/home_manger/home_states.dart';
+import 'package:donation/presentation/widgets/custom_snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../data/data_source/local/dummy_data/hospitals_data.dart';
-import '../widgets/custom_appbar_widget.dart';
+import '../../core/widgets/error_widget.dart';
+import '../../core/widgets/loading_widget.dart';
 import '../widgets/hospital_item_widget.dart';
 import 'make_request_screen.dart';
 
@@ -10,30 +14,46 @@ class HospitalsBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        AppBarWidget(
-          moreFunction: () {},
-          searchFunction: () {},
-        ),
-        Expanded(
+    return BlocConsumer<HomeCubit, HomeState>(
+      listener: (context, state) {
+        if (state is ErrorGetAllHospitalsState) {
+          showCustomSnackBar(
+            context: context,
+            message: state.errorMessage,
+          );
+        }
+      },
+      builder: (context, state) {
+        var cubit = BlocProvider.of<HomeCubit>(context);
+        if (state is GetAllHospitalsLoadingState) {
+          return const Center(
+            child: LoadingWidget(),
+          );
+        } if(state is ErrorGetAllHospitalsState) {
+          return CustomErrorWidget(
+            onPressed: (){
+              cubit.getAllHospitals();
+            },
+          );
+        }
+        return SafeArea(
           child: ListView.builder(
             physics: const BouncingScrollPhysics(),
-            itemCount: HospitalsData.hospitals.length,
+            itemCount: cubit.hospitals.length,
             padding: EdgeInsets.zero,
             itemBuilder: (context, index) => HospitalItem(
               onPressed: () {
                 Navigator.pushNamed(
                   context,
                   MakeRequestScreen.routeName,
-                  arguments: HospitalsData.hospitals[index],
+                  arguments: cubit.hospitals[index],
                 );
               },
-              hospitalModel: HospitalsData.hospitals[index],
+              hospitalModel: cubit.hospitals[index],
             ),
           ),
-        ),
-      ],
+        );
+      },
     );
   }
 }

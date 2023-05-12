@@ -21,7 +21,7 @@ class LeftCardSide extends StatelessWidget {
           radius: 50,
         ),
         SizedBox(
-          height: 110,
+          height: 200,
           width: 110,
           child: GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

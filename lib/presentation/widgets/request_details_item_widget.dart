@@ -43,7 +43,7 @@ class RequestDetailsItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    hospitalModel.hospitalName,
+                    'مستشفى ${hospitalModel.hospitalName}',
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 22,

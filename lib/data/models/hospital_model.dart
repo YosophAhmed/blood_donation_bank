@@ -1,14 +1,14 @@
 class HospitalModel {
-  final String hospitalName;
-  final String hospitalPhone;
-  final String hospitalAddress;
-  final List<String> bloodGroup;
-  final String fromHour;
-  final String toHour;
-  final String postDateTime;
-  final String postId;
-  final int floorNumber;
-  final int roomNumber;
+  late String hospitalName;
+  late String hospitalPhone;
+  late String hospitalAddress;
+  late List<String> bloodGroup;
+  late String fromHour;
+  late String toHour;
+  late String postDateTime;
+  late String postId;
+  late int floorNumber;
+  late int roomNumber;
 
   HospitalModel({
     required this.hospitalName,
@@ -22,4 +22,22 @@ class HospitalModel {
     required this.floorNumber,
     required this.roomNumber,
   });
+
+  HospitalModel.fromJson(Map<String, dynamic> json) {
+    postId = json['_id'];
+    hospitalName = json['name'];
+    hospitalAddress = json['location'];
+    hospitalPhone = json['phone'];
+    fromHour = json['from'];
+    toHour = json['to'];
+    floorNumber = json['round_num'];
+    roomNumber = json['room_num'];
+    bloodGroup = json['bloodGroup'].cast<String>();
+    postDateTime = json['updatedAt'];
+  }
+
+  @override
+  String toString() {
+    return 'name $hospitalName';
+  }
 }

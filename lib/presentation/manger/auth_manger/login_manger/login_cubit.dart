@@ -9,12 +9,10 @@ class LoginCubit extends Cubit<LoginState> {
   String userMail = '';
   String userPassword = '';
 
-
   Future<void> userLogin() async {
     emit(LoadingLoginState());
     debugPrint(userMail);
     debugPrint(userPassword);
-    await Future.delayed(const Duration(seconds: 5,),);
     emit(SuccessLoginState());
   }
 }
