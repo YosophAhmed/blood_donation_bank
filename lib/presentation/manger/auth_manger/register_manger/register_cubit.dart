@@ -108,35 +108,94 @@ class RegisterCubit extends Cubit<RegisterState> {
     );
   }
 
-  void signUp() async {
+  Future<UserSignUp> signUp() async {
     emit(LoadingRegisterState());
     try {
-      var data = {
-        'name': userModel.name,
-        'email': userModel.email,
-        'password': userModel.password,
-        'phone': userModel.phone,
-        'nationalID': userModel.nationalId,
-        'birthDate': userModel.birthDate,
-        'bloodType': userModel.bloodGroup,
-        'location': userModel.location,
-      };
-      print(json.encode(data));
-      var url = AppStrings.signUpUrl;
-      var response = await http.post(
-        Uri.parse(
-          url,
+      final response = await http.post(
+        Uri.parse(AppStrings.signUpUrl),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(
+          <String, dynamic>{
+            'name': userModel.name,
+            'email': userModel.email,
+            'password': userModel.password,
+            'phone': userModel.phone,
+            'nationalID': userModel.nationalId,
+            'birthDate': userModel.birthDate,
+            'bloodType': userModel.bloodGroup,
+            'location': userModel.location,
+          },
         ),
-        body: json.encode(data),
       );
-      var responseBody = jsonDecode(response.body);
-      print(responseBody);
+      if (response.statusCode == 201) {
+        emit(SuccessRegisterState());
+        return UserSignUp.fromJson(jsonDecode(response.body));
+      } else {
+        return throw Exception('حدث خطأ');
+      }
     } catch (error) {
       emit(
         ErrorRegisterState(
-          errorMessage: error.toString(),
+          errorMessage: error.toString().substring(0, 12),
         ),
       );
+      return throw Exception('حدث خطأ');
     }
   }
+}
+
+class UserSignUp {
+  final Data data;
+  final String token;
+
+  const UserSignUp({
+    required this.data,
+    required this.token,
+  });
+
+  factory UserSignUp.fromJson(Map<String, dynamic> json) => UserSignUp(
+        data: Data.fromJson(json['data']),
+        token: json['token'],
+      );
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    return 'name ${data.name} location ${data.location} blood ${data.bloodGroup} email ${data.email} token $token';
+  }
+}
+
+class Data {
+  final String id;
+  final String name;
+  final String email;
+  final String phone;
+  final String nationalId;
+  final String birthDate;
+  final String bloodGroup;
+  final String location;
+
+  const Data({
+    required this.id,
+    required this.name,
+    required this.email,
+    required this.phone,
+    required this.nationalId,
+    required this.birthDate,
+    required this.bloodGroup,
+    required this.location,
+  });
+
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
+        id: json['id'],
+        name: json['name'],
+        email: json['email'],
+        phone: json['phone'],
+        nationalId: json['nationalID'],
+        birthDate: json['birthDate'],
+        bloodGroup: json['bloodType'],
+        location: json['location'],
+      );
 }

@@ -22,8 +22,8 @@ class UserInfoRowWidget extends StatelessWidget {
             style: const TextStyle(
               color: Colors.black,
             ),
-            textAlign: TextAlign.start,
-            textDirection: TextDirection.rtl,
+            textAlign: TextAlign.end,
+            // textDirection: TextDirection.rtl,
           ),
         ),
         const SizedBox(

@@ -1,3 +1,4 @@
+import 'package:donation/presentation/manger/auth_manger/register_manger/register_cubit.dart';
 import 'package:donation/presentation/screens/profile_body.dart';
 import 'package:donation/presentation/screens/requests_body.dart';
 import 'package:flutter/material.dart';
@@ -17,17 +18,20 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as UserSignUp;
     return BlocProvider(
       create: (BuildContext context) => HomeCubit()..getAllHospitals(),
       child: BlocConsumer<HomeCubit, HomeState>(
         listener: (context, state) {},
         builder: (context, state) {
           var cubit = BlocProvider.of<HomeCubit>(context);
-          const List<Widget> bodies = [
-            MoreBody(),
-            HospitalsBody(),
-            RequestsBody(),
-            ProfileBody(),
+          List<Widget> bodies = [
+            const MoreBody(),
+            const HospitalsBody(),
+            const RequestsBody(),
+            ProfileBody(
+              userData: args.data,
+            ),
           ];
           return Scaffold(
             body: bodies[cubit.currentIndex],

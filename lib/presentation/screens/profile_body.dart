@@ -1,3 +1,4 @@
+import 'package:donation/presentation/manger/auth_manger/register_manger/register_cubit.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/app_strings.dart';
@@ -7,7 +8,12 @@ import '../widgets/custom_card.dart';
 import '../widgets/user_info_widget.dart';
 
 class ProfileBody extends StatelessWidget {
-  const ProfileBody({Key? key}) : super(key: key);
+  final Data userData;
+
+  const ProfileBody({
+    Key? key,
+    required this.userData,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,12 +44,12 @@ class ProfileBody extends StatelessWidget {
                 ),
                 UserInfoWidget(
                   userModel: UserModel(
-                    name: 'يوسف أحمد محمد',
-                    bloodGroup: 'B+',
-                    birthDate: '29-7-1999',
-                    nationalId: '299785462136897',
-                    phone: '01145080548',
-                    location: 'ابراهيم عبد الرازق عين شمس القاهرة',
+                    name: userData.name,
+                    bloodGroup: userData.bloodGroup,
+                    birthDate: userData.birthDate,
+                    nationalId: userData.nationalId,
+                    phone: userData.phone,
+                    location: userData.location,
                   ),
                 ),
               ],

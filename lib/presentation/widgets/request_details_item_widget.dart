@@ -53,7 +53,9 @@ class RequestDetailsItem extends StatelessWidget {
                     textAlign: TextAlign.start,
                   ),
                   UserInfoRowWidget(
-                    text: hospitalModel.postDateTime,
+                    text: hospitalModel.postDateTime
+                        .substring(0, 16)
+                        .replaceRange(10, 11, '   '),
                     icon: Icons.access_time_outlined,
                   ),
                   const HorizontalCardDivider(),

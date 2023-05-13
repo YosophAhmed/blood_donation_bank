@@ -43,7 +43,7 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   shared_preferences:
   dartz:
-  http:
+  http: ^0.13.6
   json_annotation:
 
 dev_dependencies:

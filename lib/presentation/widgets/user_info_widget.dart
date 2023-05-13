@@ -70,7 +70,7 @@ class UserInfoWidget extends StatelessWidget {
               icon: Icons.phone_enabled_outlined,
             ),
             UserInfoRowWidget(
-              text: userModel.birthDate,
+              text: userModel.birthDate.substring(0,10),
               icon: Icons.date_range_outlined,
             ),
             UserInfoRowWidget(

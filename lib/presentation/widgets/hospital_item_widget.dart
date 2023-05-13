@@ -21,7 +21,7 @@ class HospitalItem extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        height: 150,
+        height: 175,
         width: double.infinity,
         margin: const EdgeInsets.symmetric(
           horizontal: 15.0,
@@ -60,7 +60,9 @@ class HospitalItem extends StatelessWidget {
               ),
             ),
             UserInfoRowWidget(
-              text: hospitalModel.postDateTime,
+              text: hospitalModel.postDateTime
+                  .substring(0, 16)
+                  .replaceRange(10, 11, '   '),
               icon: Icons.access_time_outlined,
             ),
             Divider(
