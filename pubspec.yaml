@@ -43,7 +43,8 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   shared_preferences:
   dartz:
-  http: 
+  http:
+  json_annotation:
 
 dev_dependencies:
 
@@ -56,6 +57,8 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  json_serializable:
+  build_runner:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

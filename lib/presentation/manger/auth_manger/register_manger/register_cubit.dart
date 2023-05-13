@@ -1,3 +1,4 @@
+import 'package:donation/core/helper/api.dart';
 import 'package:donation/presentation/manger/auth_manger/register_manger/register_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,6 +7,8 @@ import 'package:geocoding/geocoding.dart';
 
 import '../../../../../../core/constants/app_strings.dart';
 import '../../../../data/models/user_model.dart';
+
+import 'dart:convert';
 
 class RegisterCubit extends Cubit<RegisterState> {
   RegisterCubit() : super(InitialRegisterState());
@@ -105,14 +108,25 @@ class RegisterCubit extends Cubit<RegisterState> {
     );
   }
 
+  late String token;
+
   Future<void> registerUser() async {
-    emit(LoadingRegisterState());
-    debugPrint(userModel.name);
-    debugPrint(userModel.birthDate);
-    debugPrint(userModel.location);
-    debugPrint(userModel.bloodGroup);
-    debugPrint(userModel.email);
-    debugPrint(userModel.phone);
-    debugPrint(userModel.password);
+    print(json.encode(userModel.toJson()));
+    // emit(LoadingRegisterState());
+    // try {
+    //   Map<String, dynamic> data = await Api().post(
+    //     url: 'https://project-blood.onrender.com/api/v1/auth/signup',
+    //     body: json.encode(userModel.toJson()),
+    //   );
+    //   token = data['token'];
+    //   print(token);
+    //   emit(SuccessRegisterState());
+    // } catch (error) {
+    //   emit(
+    //     ErrorRegisterState(
+    //       errorMessage: error.toString(),
+    //     ),
+    //   );
+    // }
   }
 }

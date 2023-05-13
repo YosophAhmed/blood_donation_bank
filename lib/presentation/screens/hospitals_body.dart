@@ -25,17 +25,18 @@ class HospitalsBody extends StatelessWidget {
       },
       builder: (context, state) {
         var cubit = BlocProvider.of<HomeCubit>(context);
-        if (state is GetAllHospitalsLoadingState) {
-          return const Center(
-            child: LoadingWidget(),
-          );
-        } if(state is ErrorGetAllHospitalsState) {
-          return CustomErrorWidget(
-            onPressed: (){
-              cubit.getAllHospitals();
-            },
-          );
-        }
+        // if (state is GetAllHospitalsLoadingState) {
+        //   return const Center(
+        //     child: LoadingWidget(),
+        //   );
+        // }
+        // if (state is ErrorGetAllHospitalsState) {
+        //   return CustomErrorWidget(
+        //     onPressed: () {
+        //       cubit.getAllHospitals();
+        //     },
+        //   );
+        // }
         return SafeArea(
           child: ListView.builder(
             physics: const BouncingScrollPhysics(),

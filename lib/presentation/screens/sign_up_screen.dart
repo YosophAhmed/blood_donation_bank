@@ -253,12 +253,7 @@ class SignUpScreen extends StatelessWidget {
                               height: 28,
                             ),
                             CustomButton(
-                              onPressed: () async {
-                                await Future.delayed(
-                                  const Duration(
-                                    milliseconds: 250,
-                                  ),
-                                );
+                              onPressed: () {
                                 if (formKey.currentState!.validate()) {
                                   cubit.registerUser();
                                 }

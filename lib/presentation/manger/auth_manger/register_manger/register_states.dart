@@ -19,6 +19,3 @@ class ChangeBirthdayHintState extends RegisterState {}
 class ChangeRegionHintState extends RegisterState {}
 
 class ChangeBloodGroupHintState extends RegisterState {}
-
-
-
