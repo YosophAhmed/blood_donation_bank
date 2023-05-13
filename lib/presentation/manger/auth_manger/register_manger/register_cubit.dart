@@ -1,6 +1,6 @@
-import 'package:donation/core/helper/api.dart';
+import 'dart:convert';
+
 import 'package:donation/presentation/manger/auth_manger/register_manger/register_states.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
@@ -8,7 +8,7 @@ import 'package:geocoding/geocoding.dart';
 import '../../../../../../core/constants/app_strings.dart';
 import '../../../../data/models/user_model.dart';
 
-import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class RegisterCubit extends Cubit<RegisterState> {
   RegisterCubit() : super(InitialRegisterState());
@@ -108,18 +108,29 @@ class RegisterCubit extends Cubit<RegisterState> {
     );
   }
 
-  late String token;
-
-  Future<void> registerUser() async {
+  void signUp() async {
     emit(LoadingRegisterState());
     try {
-      Map<String, dynamic> data = await Api().post(
-        url: AppStrings.signUpUrl,
-        body: json.encode(userModel.toJson()),
+      var data = {
+        'name': userModel.name,
+        'email': userModel.email,
+        'password': userModel.password,
+        'phone': userModel.phone,
+        'nationalID': userModel.nationalId,
+        'birthDate': userModel.birthDate,
+        'bloodType': userModel.bloodGroup,
+        'location': userModel.location,
+      };
+      print(json.encode(data));
+      var url = AppStrings.signUpUrl;
+      var response = await http.post(
+        Uri.parse(
+          url,
+        ),
+        body: json.encode(data),
       );
-      token = data['token'];
-      print(token);
-      emit(SuccessRegisterState());
+      var responseBody = jsonDecode(response.body);
+      print(responseBody);
     } catch (error) {
       emit(
         ErrorRegisterState(

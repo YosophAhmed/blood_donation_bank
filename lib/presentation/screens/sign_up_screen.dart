@@ -255,7 +255,7 @@ class SignUpScreen extends StatelessWidget {
                             CustomButton(
                               onPressed: () {
                                 if (formKey.currentState!.validate()) {
-                                  cubit.registerUser();
+                                  cubit.signUp();
                                 }
                               },
                               backGroundColor: AppColors.lightRedColor,
