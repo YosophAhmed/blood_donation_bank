@@ -119,5 +119,21 @@ class AppStrings {
     'لا أعلم',
   ];
 
-  static const String baseUrl = 'https://project-blood.onrender.com/api/v1/';
+  static const String getAllHospitalsUrl =
+      'https://project-blood.onrender.com/api/v1/hospital';
+
+  static const String signUpUrl =
+      'https://project-blood.onrender.com/api/v1/auth/signup';
+
+  static const String loginUrl =
+      'https://project-blood.onrender.com/api/v1/auth/login';
+
+  static const String getUserDataUrl =
+      'https://project-blood.onrender.com/api/v1/user/myProfile';
+
+  static const String getAllRequestsUrl =
+      'https://project-blood.onrender.com/api/v1/requests/allResults';
+
+  static const String makeRequestUrl =
+      'https://project-blood.onrender.com/api/v1/requests/645827f1894732fd5c9248b8';
 }

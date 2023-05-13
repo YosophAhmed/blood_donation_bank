@@ -111,22 +111,21 @@ class RegisterCubit extends Cubit<RegisterState> {
   late String token;
 
   Future<void> registerUser() async {
-    print(json.encode(userModel.toJson()));
-    // emit(LoadingRegisterState());
-    // try {
-    //   Map<String, dynamic> data = await Api().post(
-    //     url: 'https://project-blood.onrender.com/api/v1/auth/signup',
-    //     body: json.encode(userModel.toJson()),
-    //   );
-    //   token = data['token'];
-    //   print(token);
-    //   emit(SuccessRegisterState());
-    // } catch (error) {
-    //   emit(
-    //     ErrorRegisterState(
-    //       errorMessage: error.toString(),
-    //     ),
-    //   );
-    // }
+    emit(LoadingRegisterState());
+    try {
+      Map<String, dynamic> data = await Api().post(
+        url: AppStrings.signUpUrl,
+        body: json.encode(userModel.toJson()),
+      );
+      token = data['token'];
+      print(token);
+      emit(SuccessRegisterState());
+    } catch (error) {
+      emit(
+        ErrorRegisterState(
+          errorMessage: error.toString(),
+        ),
+      );
+    }
   }
 }

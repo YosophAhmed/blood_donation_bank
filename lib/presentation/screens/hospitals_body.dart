@@ -25,35 +25,35 @@ class HospitalsBody extends StatelessWidget {
       },
       builder: (context, state) {
         var cubit = BlocProvider.of<HomeCubit>(context);
-        // if (state is GetAllHospitalsLoadingState) {
-        //   return const Center(
-        //     child: LoadingWidget(),
-        //   );
-        // }
-        // if (state is ErrorGetAllHospitalsState) {
-        //   return CustomErrorWidget(
-        //     onPressed: () {
-        //       cubit.getAllHospitals();
-        //     },
-        //   );
-        // }
-        return SafeArea(
-          child: ListView.builder(
-            physics: const BouncingScrollPhysics(),
-            itemCount: cubit.hospitals.length,
-            padding: EdgeInsets.zero,
-            itemBuilder: (context, index) => HospitalItem(
-              onPressed: () {
-                Navigator.pushNamed(
-                  context,
-                  MakeRequestScreen.routeName,
-                  arguments: cubit.hospitals[index],
-                );
-              },
-              hospitalModel: cubit.hospitals[index],
+        if (state is LoadingGetAllHospitalsState) {
+          return const Center(
+            child: LoadingWidget(),
+          );
+        } else if (state is ErrorGetAllHospitalsState) {
+          return CustomErrorWidget(
+            onPressed: () {
+              cubit.getAllHospitals();
+            },
+          );
+        } else {
+          return SafeArea(
+            child: ListView.builder(
+              physics: const BouncingScrollPhysics(),
+              itemCount: cubit.hospitals.length,
+              padding: EdgeInsets.zero,
+              itemBuilder: (context, index) => HospitalItem(
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    MakeRequestScreen.routeName,
+                    arguments: cubit.hospitals[index],
+                  );
+                },
+                hospitalModel: cubit.hospitals[index],
+              ),
             ),
-          ),
-        );
+          );
+        }
       },
     );
   }

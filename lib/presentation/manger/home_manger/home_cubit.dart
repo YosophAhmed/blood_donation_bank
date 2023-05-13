@@ -1,3 +1,4 @@
+import 'package:donation/core/constants/app_strings.dart';
 import 'package:donation/core/helper/api.dart';
 import 'package:donation/data/models/hospital_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,10 +22,10 @@ class HomeCubit extends Cubit<HomeState> {
   List<HospitalModel> hospitals = [];
 
   Future<void> getAllHospitals() async {
-    emit(GetAllHospitalsLoadingState());
+    emit(LoadingGetAllHospitalsState());
     try {
       Map<String, dynamic> data = await Api().get(
-        url: 'https://project-blood.onrender.com/api/v1/hospital',
+        url: AppStrings.getAllHospitalsUrl,
       );
       for (int i = 0; i < data['data'].length; i++) {
         hospitals.add(
@@ -40,4 +41,6 @@ class HomeCubit extends Cubit<HomeState> {
       );
     }
   }
+
+
 }

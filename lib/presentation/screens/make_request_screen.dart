@@ -1,7 +1,10 @@
 import 'package:donation/core/styles/text_styles.dart';
 import 'package:donation/data/models/hospital_model.dart';
+import 'package:donation/presentation/manger/make_request_manger/make_request_cubit.dart';
+import 'package:donation/presentation/manger/make_request_manger/make_request_state.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_strings.dart';
@@ -45,34 +48,42 @@ class MakeRequestScreen extends StatelessWidget {
             RequestDetailsItem(
               hospitalModel: args,
             ),
-            BottomUpContainer(
-              color: AppColors.containerColor,
-              height: 600,
-              widget: Column(
-                children: [
-                  Text(
-                    AppStrings.addRequestDescription,
-                    style: TextStyles.inputTextStyle(),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 8.0,
+            BlocProvider(
+              create: (BuildContext context) => MakeRequestCubit(),
+              child: BlocConsumer<MakeRequestCubit, MakeRequestState>(
+                listener: (context, state) {},
+                builder: (context, state) {
+                  return BottomUpContainer(
+                    color: AppColors.containerColor,
+                    height: 600,
+                    widget: Column(
+                      children: [
+                        Text(
+                          AppStrings.addRequestDescription,
+                          style: TextStyles.inputTextStyle(),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 8.0,
+                          ),
+                          child: CustomTextFormField(
+                            color: AppColors.offWhiteColor,
+                            maxLines: 2,
+                            keyboardType: TextInputType.text,
+                            onSaved: (value) {},
+                            onSubmitted: (value) {},
+                          ),
+                        ),
+                        CustomButton(
+                          onPressed: () {},
+                          backGroundColor: AppColors.lightRedColor,
+                          icon: Icons.check_circle_rounded,
+                          label: AppStrings.makeRequest,
+                        ),
+                      ],
                     ),
-                    child: CustomTextFormField(
-                      color: AppColors.offWhiteColor,
-                      maxLines: 2,
-                      keyboardType: TextInputType.text,
-                      onSaved: (value) {},
-                      onSubmitted: (value) {},
-                    ),
-                  ),
-                  CustomButton(
-                    onPressed: () {},
-                    backGroundColor: AppColors.lightRedColor,
-                    icon: Icons.check_circle_rounded,
-                    label: AppStrings.makeRequest,
-                  ),
-                ],
+                  );
+                },
               ),
             ),
           ],
