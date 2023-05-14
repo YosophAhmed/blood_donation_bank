@@ -43,9 +43,12 @@ class RequestsBody extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               padding: EdgeInsets.zero,
               itemCount: cubit.userRequests.requestsData.length,
-              itemBuilder: (context, index) => RequestItem(
-                requestData: cubit.userRequests.requestsData[index],
-              ),
+              itemBuilder: (context, index) {
+                int reversedIndex = cubit.userRequests.requestsData.length - 1 - index;
+                return RequestItem(
+                requestData: cubit.userRequests.requestsData[reversedIndex],
+              );
+              },
             ),
           );
         }

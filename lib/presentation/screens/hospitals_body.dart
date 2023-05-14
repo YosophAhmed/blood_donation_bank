@@ -44,16 +44,19 @@ class HospitalsBody extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               itemCount: cubit.hospitals.length,
               padding: EdgeInsets.zero,
-              itemBuilder: (context, index) => HospitalItem(
+              itemBuilder: (context, index) {
+                int reversedIndex = cubit.hospitals.length - 1 - index;
+                return HospitalItem(
                 onPressed: () {
                   Navigator.pushNamed(
                     context,
                     MakeRequestScreen.routeName,
-                    arguments: cubit.hospitals[index],
+                    arguments: cubit.hospitals[reversedIndex],
                   );
                 },
-                hospitalModel: cubit.hospitals[index],
-              ),
+                hospitalModel: cubit.hospitals[reversedIndex],
+              );
+              },
             ),
           );
         }
