@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_strings.dart';
-import '../../data/models/auth/user_sign.dart';
 import '../manger/home_manger/home_cubit.dart';
 import '../manger/home_manger/home_states.dart';
 import 'hospitals_body.dart';
@@ -18,11 +17,11 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as UserSignUp;
     return BlocProvider(
       create: (BuildContext context) => HomeCubit()
         ..getAllUserRequests()
-        ..getAllHospitals(),
+        ..getAllHospitals()
+        ..getUserData(),
       child: BlocConsumer<HomeCubit, HomeState>(
         listener: (context, state) {},
         builder: (context, state) {
@@ -32,7 +31,7 @@ class HomeScreen extends StatelessWidget {
             const HospitalsBody(),
             const RequestsBody(),
             ProfileBody(
-              userData: args.data,
+              userData: cubit.userDataModel,
             ),
           ];
           return Scaffold(

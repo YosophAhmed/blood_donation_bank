@@ -60,7 +60,7 @@ class RequestItem extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                requestData.hospitalModel.hospitalName,
+                'مستشفى ${requestData.hospitalModel.hospitalName}',
                 style: const TextStyle(
                   color: Colors.black,
                   fontSize: 18,
@@ -71,7 +71,9 @@ class RequestItem extends StatelessWidget {
               ),
             ),
             UserInfoRowWidget(
-              text: requestData.hospitalModel.postDateTime,
+              text: requestData.updatedAt
+                  .substring(0, 16)
+                  .replaceRange(10, 11, '   '),
               icon: Icons.access_time_outlined,
             ),
             Divider(

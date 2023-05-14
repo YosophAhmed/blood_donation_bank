@@ -4,6 +4,7 @@ import 'package:donation/core/constants/app_strings.dart';
 import 'package:donation/core/helper/api.dart';
 import 'package:donation/data/data_source/local/cache_helper.dart';
 import 'package:donation/data/models/hospital_model.dart';
+import 'package:donation/data/models/user_data_model.dart';
 import 'package:donation/data/models/user_requests_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,6 +24,48 @@ class HomeCubit extends Cubit<HomeState> {
     emit(
       ChangeBottomNavigationState(),
     );
+  }
+
+  UserDataModel userDataModel = UserDataModel(
+    data: UserData(
+      name: '',
+      location: '',
+      phone: '',
+      birthDate: '',
+      bloodType: '',
+      nationalID: '',
+    ),
+  );
+
+  Future<void> getUserData() async {
+    emit(LoadingGetUserDataState());
+    try {
+      final response = await http.get(
+        Uri.parse(AppStrings.getUserDataUrl),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $token',
+        },
+      );
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        userDataModel = UserDataModel.fromJson(jsonDecode(response.body));
+        emit(
+          SuccessGetUserDataState(),
+        );
+      } else {
+        emit(
+          ErrorGetUserDataState(
+            errorMessage: 'لقد حدث خطأ',
+          ),
+        );
+      }
+    } catch (error) {
+      emit(
+        ErrorGetUserDataState(
+          errorMessage: 'لقد حدث خطأ',
+        ),
+      );
+    }
   }
 
   List<HospitalModel> hospitals = [];
@@ -52,6 +95,10 @@ class HomeCubit extends Cubit<HomeState> {
     key: 'token',
   );
 
+  UserRequestsModel userRequests = UserRequestsModel(
+    requestsData: [],
+  );
+
   Future<void> getAllUserRequests() async {
     emit(LoadingGetAllRequestsState());
     try {
@@ -63,12 +110,9 @@ class HomeCubit extends Cubit<HomeState> {
         },
       );
       if (response.statusCode == 201 || response.statusCode == 200) {
+        userRequests = UserRequestsModel.fromJson(jsonDecode(response.body));
         emit(
-          SuccessGetAllRequestsState(
-            userRequests: UserRequestsModel.fromJson(
-              jsonDecode(response.body),
-            ),
-          ),
+          SuccessGetAllRequestsState(),
         );
       } else {
         emit(

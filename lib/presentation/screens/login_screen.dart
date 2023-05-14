@@ -38,7 +38,6 @@ class LoginScreen extends StatelessWidget {
               Navigator.pushReplacementNamed(
                 context,
                 HomeScreen.routeName,
-                arguments: state.userData,
               );
             } else if (state is ErrorLoginState) {
               showCustomSnackBar(

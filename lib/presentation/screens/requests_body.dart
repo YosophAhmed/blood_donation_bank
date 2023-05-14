@@ -18,24 +18,13 @@ class RequestsBody extends StatelessWidget {
     return BlocConsumer<HomeCubit, HomeState>(
       listener: (context, state) {},
       builder: (context, state) {
+        var cubit = BlocProvider.of<HomeCubit>(context);
         if (state is SuccessGetAllRequestsState &&
-            state.userRequests.requestsData.isEmpty) {
+            cubit.userRequests.requestsData.isEmpty) {
           return Center(
             child: Text(
-              'لا توجد تبرعات ثابقة',
+              'لا توجد تبرعات سابقة',
               style: TextStyles.buttonTextStyle(),
-            ),
-          );
-        } else if (state is SuccessGetAllRequestsState &&
-            state.userRequests.requestsData.isNotEmpty) {
-          return SafeArea(
-            child: ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              padding: EdgeInsets.zero,
-              itemCount: state.userRequests.requestsData.length,
-              itemBuilder: (context, index) => RequestItem(
-                requestData: state.userRequests.requestsData[index],
-              ),
             ),
           );
         } else if (state is ErrorGetAllRequestsState) {
@@ -44,9 +33,20 @@ class RequestsBody extends StatelessWidget {
               onPressed: () {},
             ),
           );
-        } else {
+        } else if (state is LoadingGetAllRequestsState) {
           return const Center(
             child: LoadingWidget(),
+          );
+        } else {
+          return SafeArea(
+            child: ListView.builder(
+              physics: const BouncingScrollPhysics(),
+              padding: EdgeInsets.zero,
+              itemCount: cubit.userRequests.requestsData.length,
+              itemBuilder: (context, index) => RequestItem(
+                requestData: cubit.userRequests.requestsData[index],
+              ),
+            ),
           );
         }
       },

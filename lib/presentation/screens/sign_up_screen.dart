@@ -40,7 +40,6 @@ class SignUpScreen extends StatelessWidget {
               Navigator.pushReplacementNamed(
                 context,
                 HomeScreen.routeName,
-                arguments: state.userData,
               );
             } else if (state is ErrorRegisterState) {
               showCustomSnackBar(

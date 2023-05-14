@@ -1,14 +1,14 @@
+import 'package:donation/data/models/user_data_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/app_strings.dart';
-import '../../data/models/auth/user_sign.dart';
 import '../../data/models/user_model.dart';
 import '../widgets/animated_icon_widget.dart';
 import '../widgets/custom_card.dart';
 import '../widgets/user_info_widget.dart';
 
 class ProfileBody extends StatelessWidget {
-  final Data userData;
+  final UserDataModel userData;
 
   const ProfileBody({
     Key? key,
@@ -44,12 +44,12 @@ class ProfileBody extends StatelessWidget {
                 ),
                 UserInfoWidget(
                   userModel: UserModel(
-                    name: userData.name,
-                    bloodGroup: userData.bloodGroup,
-                    birthDate: userData.birthDate,
-                    nationalId: userData.nationalId,
-                    phone: userData.phone,
-                    location: userData.location,
+                    name: userData.data.name,
+                    bloodGroup: userData.data.bloodType,
+                    birthDate: userData.data.birthDate,
+                    nationalId: userData.data.nationalID,
+                    phone: userData.data.phone,
+                    location: userData.data.location,
                   ),
                 ),
               ],
