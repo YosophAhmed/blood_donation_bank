@@ -27,8 +27,12 @@ class HomeScreen extends StatelessWidget {
           var cubit = BlocProvider.of<HomeCubit>(context);
           List<Widget> bodies = [
             const MoreBody(),
-            const HospitalsBody(),
-            const RequestsBody(),
+            HospitalsBody(
+              token: args.token,
+            ),
+            RequestsBody(
+              token: args.token,
+            ),
             ProfileBody(
               userData: args.data,
             ),

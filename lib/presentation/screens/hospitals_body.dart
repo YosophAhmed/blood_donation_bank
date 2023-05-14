@@ -10,7 +10,12 @@ import '../widgets/hospital_item_widget.dart';
 import 'make_request_screen.dart';
 
 class HospitalsBody extends StatelessWidget {
-  const HospitalsBody({Key? key}) : super(key: key);
+  final String token;
+
+  const HospitalsBody({
+    Key? key,
+    required this.token,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

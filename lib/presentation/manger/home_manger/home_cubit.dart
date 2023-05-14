@@ -36,7 +36,7 @@ class HomeCubit extends Cubit<HomeState> {
     } catch (error) {
       emit(
         ErrorGetAllHospitalsState(
-          errorMessage: error.toString(),
+          errorMessage: 'لقد حدث خطأ',
         ),
       );
     }
