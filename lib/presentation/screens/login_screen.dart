@@ -31,9 +31,14 @@ class LoginScreen extends StatelessWidget {
         body: BlocConsumer<LoginCubit, LoginState>(
           listener: (context, state) {
             if (state is SuccessLoginState) {
+              showCustomSnackBar(
+                context: context,
+                message: 'تم تسجيل الدخول بنجاح',
+              );
               Navigator.pushReplacementNamed(
                 context,
                 HomeScreen.routeName,
+                arguments: state.userData,
               );
             } else if (state is ErrorLoginState) {
               showCustomSnackBar(
@@ -89,11 +94,6 @@ class LoginScreen extends StatelessWidget {
                                 ),
                                 CustomTextFormField(
                                   keyboardType: TextInputType.visiblePassword,
-                                  // prefix: cubit.prefixIcon,
-                                  // prefixFunction: () {
-                                  //   cubit.changePasswordVisibility();
-                                  // },
-                                  // obscure: cubit.isVisible,
                                   suffix: Icons.key_rounded,
                                   suffixIconColor: AppColors.greenColor,
                                   hintText: AppStrings.passwordHint,
@@ -109,9 +109,9 @@ class LoginScreen extends StatelessWidget {
                                   height: 28,
                                 ),
                                 CustomButton(
-                                  onPressed: () {
+                                  onPressed: () async {
                                     if (formKey.currentState!.validate()) {
-                                      cubit.userLogin();
+                                      await cubit.signIn();
                                     }
                                   },
                                   backGroundColor: AppColors.lightRedColor,

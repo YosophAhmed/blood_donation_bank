@@ -37,6 +37,11 @@ class SignUpScreen extends StatelessWidget {
                 context: context,
                 message: 'تم انشاء حساب جديد',
               );
+              Navigator.pushReplacementNamed(
+                context,
+                HomeScreen.routeName,
+                arguments: state.userData,
+              );
             } else if (state is ErrorRegisterState) {
               showCustomSnackBar(
                 context: context,
@@ -255,12 +260,7 @@ class SignUpScreen extends StatelessWidget {
                             CustomButton(
                               onPressed: () async {
                                 if (formKey.currentState!.validate()) {
-                                  UserSignUp userData = await cubit.signUp();
-                                  Navigator.pushReplacementNamed(
-                                    context,
-                                    HomeScreen.routeName,
-                                    arguments: userData,
-                                  );
+                                  await cubit.signUp();
                                 }
                               },
                               backGroundColor: AppColors.lightRedColor,

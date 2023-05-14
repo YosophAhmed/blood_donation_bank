@@ -1,7 +1,7 @@
-import 'package:donation/presentation/manger/auth_manger/register_manger/register_cubit.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/app_strings.dart';
+import '../../data/models/auth/user_sign.dart';
 import '../../data/models/user_model.dart';
 import '../widgets/animated_icon_widget.dart';
 import '../widgets/custom_card.dart';

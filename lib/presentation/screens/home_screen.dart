@@ -1,4 +1,3 @@
-import 'package:donation/presentation/manger/auth_manger/register_manger/register_cubit.dart';
 import 'package:donation/presentation/screens/profile_body.dart';
 import 'package:donation/presentation/screens/requests_body.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_strings.dart';
+import '../../data/models/auth/user_sign.dart';
 import '../manger/home_manger/home_cubit.dart';
 import '../manger/home_manger/home_states.dart';
 import 'hospitals_body.dart';
