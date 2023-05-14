@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:donation/data/data_source/local/cache_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 
@@ -29,6 +30,10 @@ class LoginCubit extends Cubit<LoginState> {
         ),
       );
       if (response.statusCode == 201 || response.statusCode == 200) {
+        CacheHelper.saveCacheData(
+          key: 'token',
+          value: UserSignUp.fromJson(jsonDecode(response.body)).token,
+        );
         emit(
           SuccessLoginState(
             userData: UserSignUp.fromJson(jsonDecode(response.body)),
@@ -38,6 +43,12 @@ class LoginCubit extends Cubit<LoginState> {
         emit(
           ErrorLoginState(
             errorMessage: 'خطأ فى الايميل او كلمة السر',
+          ),
+        );
+      } else if (response.statusCode == 500) {
+        emit(
+          ErrorLoginState(
+            errorMessage: 'خطأ فى الخادم',
           ),
         );
       } else {

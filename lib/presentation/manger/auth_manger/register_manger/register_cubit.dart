@@ -6,10 +6,13 @@ import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 
 import '../../../../../../core/constants/app_strings.dart';
+import '../../../../data/data_source/local/cache_helper.dart';
 import '../../../../data/models/auth/user_sign.dart';
 import '../../../../data/models/user_model.dart';
 
 import 'package:http/http.dart' as http;
+
+
 
 class RegisterCubit extends Cubit<RegisterState> {
   RegisterCubit() : super(InitialRegisterState());
@@ -131,9 +134,19 @@ class RegisterCubit extends Cubit<RegisterState> {
         ),
       );
       if (response.statusCode == 201) {
+        CacheHelper.saveCacheData(
+          key: 'token',
+          value: UserSignUp.fromJson(jsonDecode(response.body)).token,
+        );
         emit(
           SuccessRegisterState(
             userData: UserSignUp.fromJson(jsonDecode(response.body)),
+          ),
+        );
+      } else if (response.statusCode == 500) {
+        emit(
+          ErrorRegisterState(
+            errorMessage: 'خطأ فى الخادم',
           ),
         );
       } else {

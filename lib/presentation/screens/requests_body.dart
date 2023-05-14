@@ -4,11 +4,9 @@ import '../../data/data_source/local/dummy_data/requests_data.dart';
 import '../widgets/request_item_widget.dart';
 
 class RequestsBody extends StatelessWidget {
-  final String token;
 
   const RequestsBody({
     Key? key,
-    required this.token,
   }) : super(key: key);
 
   @override

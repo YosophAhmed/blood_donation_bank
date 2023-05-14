@@ -1,4 +1,3 @@
-import 'package:donation/core/screens/sandbox_screen.dart';
 import 'package:donation/presentation/screens/home_screen.dart';
 import 'package:donation/presentation/screens/login_screen.dart';
 import 'package:donation/presentation/screens/make_request_screen.dart';
@@ -8,8 +7,11 @@ import 'package:donation/presentation/screens/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'core/styles/app_themes.dart';
+import 'data/data_source/local/cache_helper.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await CacheHelper.init();
   runApp(const DonationApp());
 }
 
@@ -21,8 +23,6 @@ class DonationApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {
-        SandBoxScreen.routeName: (BuildContext context) =>
-            const SandBoxScreen(),
         OnBoardingScreen.routeName: (BuildContext context) =>
             const OnBoardingScreen(),
         LoginScreen.routeName: (BuildContext context) => const LoginScreen(),

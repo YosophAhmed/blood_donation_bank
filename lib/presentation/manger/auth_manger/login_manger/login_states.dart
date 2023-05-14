@@ -9,6 +9,8 @@ class LoadingLoginState extends LoginState {}
 class SuccessLoginState extends LoginState {
   final UserSignUp userData;
 
+
+
   SuccessLoginState({
     required this.userData,
   });

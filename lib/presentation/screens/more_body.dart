@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_strings.dart';
+import '../../data/data_source/local/cache_helper.dart';
 import '../widgets/animated_icon_widget.dart';
 import '../widgets/custom_list_tile_widget.dart';
 import 'login_screen.dart';
@@ -27,15 +28,12 @@ class MoreBody extends StatelessWidget {
             ),
             CustomListTile(
               onTap: () {
-                Future.delayed(
-                  const Duration(
-                    milliseconds: 200,
-                  ),
-                ).then(
-                  (value) => Navigator.pushReplacementNamed(
-                    context,
-                    LoginScreen.routeName,
-                  ),
+                CacheHelper.removeCacheData(
+                  key: 'token',
+                );
+                Navigator.pushReplacementNamed(
+                  context,
+                  LoginScreen.routeName,
                 );
               },
               leading: const Icon(
