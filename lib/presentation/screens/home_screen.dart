@@ -20,7 +20,9 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as UserSignUp;
     return BlocProvider(
-      create: (BuildContext context) => HomeCubit()..getAllHospitals(),
+      create: (BuildContext context) => HomeCubit()
+        ..getAllUserRequests()
+        ..getAllHospitals(),
       child: BlocConsumer<HomeCubit, HomeState>(
         listener: (context, state) {},
         builder: (context, state) {

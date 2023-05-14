@@ -3,17 +3,17 @@ import 'package:donation/presentation/widgets/user_info_row_widget.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../data/models/requests_model.dart';
+import '../../data/models/user_requests_model.dart';
 import 'custom_button_widget.dart';
 import 'horizontal_card_divider_widget.dart';
 import 'left_card_side_widget.dart';
 
 class RequestItem extends StatelessWidget {
-  final RequestsModel requestsModel;
+  final RequestData requestData;
 
   const RequestItem({
     Key? key,
-    required this.requestsModel,
+    required this.requestData,
   }) : super(key: key);
 
   @override
@@ -26,7 +26,7 @@ class RequestItem extends StatelessWidget {
             backgroundColor: AppColors.offWhiteColor,
             elevation: 0.0,
             child: RequestDescription(
-              requestsModel: requestsModel,
+              requestData: requestData,
             ),
           ),
         );
@@ -60,7 +60,7 @@ class RequestItem extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                requestsModel.hospitalModel.hospitalName,
+                requestData.hospitalModel.hospitalName,
                 style: const TextStyle(
                   color: Colors.black,
                   fontSize: 18,
@@ -71,7 +71,7 @@ class RequestItem extends StatelessWidget {
               ),
             ),
             UserInfoRowWidget(
-              text: requestsModel.hospitalModel.postDateTime,
+              text: requestData.hospitalModel.postDateTime,
               icon: Icons.access_time_outlined,
             ),
             Divider(
@@ -79,7 +79,7 @@ class RequestItem extends StatelessWidget {
               color: Colors.grey.withOpacity(0.5),
             ),
             UserInfoRowWidget(
-              text: requestsModel.requestStatus,
+              text: requestData.donateStatus,
               icon: Icons.timelapse_outlined,
             ),
           ],
@@ -90,11 +90,11 @@ class RequestItem extends StatelessWidget {
 }
 
 class RequestDescription extends StatelessWidget {
-  final RequestsModel requestsModel;
+  final RequestData requestData;
 
   const RequestDescription({
     Key? key,
-    required this.requestsModel,
+    required this.requestData,
   }) : super(key: key);
 
   @override
@@ -112,14 +112,14 @@ class RequestDescription extends StatelessWidget {
             Row(
               children: [
                 LeftCardSide(
-                  bloodGroups: requestsModel.hospitalModel.bloodGroup,
+                  bloodGroups: requestData.hospitalModel.bloodGroup,
                 ),
                 Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        requestsModel.hospitalModel.hospitalName,
+                        requestData.hospitalModel.hospitalName,
                         style: const TextStyle(
                           color: Colors.black,
                           fontSize: 22,
@@ -129,48 +129,46 @@ class RequestDescription extends StatelessWidget {
                         textAlign: TextAlign.start,
                       ),
                       UserInfoRowWidget(
-                        text: requestsModel.hospitalModel.postDateTime,
+                        text: requestData.hospitalModel.postDateTime,
                         icon: Icons.access_time_outlined,
                       ),
                       const HorizontalCardDivider(),
                       UserInfoRowWidget(
-                        text: requestsModel.hospitalModel.hospitalPhone,
+                        text: requestData.hospitalModel.hospitalPhone,
                         icon: Icons.phone_enabled_outlined,
                       ),
                       UserInfoRowWidget(
-                        text: requestsModel.hospitalModel.hospitalAddress,
+                        text: requestData.hospitalModel.hospitalAddress,
                         icon: Icons.location_on_outlined,
                       ),
                       const HorizontalCardDivider(),
                       UserInfoRowWidget(
-                        text:
-                            'من الساعة ${requestsModel.hospitalModel.fromHour}',
+                        text: 'من الساعة ${requestData.hospitalModel.fromHour}',
                         icon: Icons.timer,
                       ),
                       UserInfoRowWidget(
-                        text:
-                            'الى الساعة ${requestsModel.hospitalModel.toHour}',
+                        text: 'الى الساعة ${requestData.hospitalModel.toHour}',
                         icon: Icons.timer_outlined,
                       ),
                       const HorizontalCardDivider(),
                       UserInfoRowWidget(
                         text:
-                            'رقم الطابق ${requestsModel.hospitalModel.floorNumber}',
+                            'رقم الطابق ${requestData.hospitalModel.floorNumber}',
                         icon: Icons.view_list_outlined,
                       ),
                       UserInfoRowWidget(
                         text:
-                            'رقم الغرفة ${requestsModel.hospitalModel.roomNumber}',
+                            'رقم الغرفة ${requestData.hospitalModel.roomNumber}',
                         icon: Icons.view_list_outlined,
                       ),
                       const HorizontalCardDivider(),
                       UserInfoRowWidget(
-                        text: requestsModel.userDescription,
+                        text: requestData.details,
                         icon: Icons.description_outlined,
                       ),
                       const HorizontalCardDivider(),
                       UserInfoRowWidget(
-                        text: requestsModel.requestStatus,
+                        text: requestData.donateStatus,
                         icon: Icons.timelapse_outlined,
                       ),
                     ],

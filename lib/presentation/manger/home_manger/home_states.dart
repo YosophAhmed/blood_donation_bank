@@ -1,3 +1,5 @@
+import 'package:donation/data/models/user_requests_model.dart';
+
 abstract class HomeState {}
 
 class InitialHomeState extends HomeState {}
@@ -30,7 +32,13 @@ class ErrorGetUserDataState extends HomeState {
 
 class LoadingGetAllRequestsState extends HomeState {}
 
-class SuccessGetAllRequestsState extends HomeState {}
+class SuccessGetAllRequestsState extends HomeState {
+  final UserRequestsModel userRequests;
+
+  SuccessGetAllRequestsState({
+    required this.userRequests,
+  });
+}
 
 class ErrorGetAllRequestsState extends HomeState {
   final String errorMessage;
