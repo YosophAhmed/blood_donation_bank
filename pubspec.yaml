@@ -42,10 +42,8 @@ dependencies:
   geocoding: ^2.1.0
   flutter_launcher_icons: ^0.13.1
   shared_preferences:
-  dartz:
   http: ^0.13.6
   json_annotation:
-  conditional_builder_null_safety:
 
 dev_dependencies:
 

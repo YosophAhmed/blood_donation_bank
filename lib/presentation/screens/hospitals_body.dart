@@ -1,4 +1,3 @@
-import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:donation/presentation/manger/home_manger/home_cubit.dart';
 import 'package:donation/presentation/manger/home_manger/home_states.dart';
 import 'package:donation/presentation/widgets/custom_snackbar.dart';
@@ -32,40 +31,35 @@ class HospitalsBody extends StatelessWidget {
           return const Center(
             child: LoadingWidget(),
           );
-        }
-        return ConditionalBuilder(
-          condition: cubit.hospitals.isNotEmpty,
-          builder: (BuildContext context) {
-            return SafeArea(
-              child: ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                itemCount: cubit.hospitals.length,
-                padding: EdgeInsets.zero,
-                itemBuilder: (context, index) {
-                  int reversedIndex = cubit.hospitals.length - 1 - index;
-                  return HospitalItem(
-                    onPressed: () {
-                      Navigator.pushNamed(
-                        context,
-                        MakeRequestScreen.routeName,
-                        arguments: cubit.hospitals[reversedIndex],
+        } else {
+          return cubit.hospitals.isEmpty
+              ? Center(
+                  child: Text(
+                    'لا توجد مستشفيات',
+                    style: TextStyles.buttonTextStyle(),
+                  ),
+                )
+              : SafeArea(
+                  child: ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: cubit.hospitals.length,
+                    padding: EdgeInsets.zero,
+                    itemBuilder: (context, index) {
+                      int reversedIndex = cubit.hospitals.length - 1 - index;
+                      return HospitalItem(
+                        onPressed: () {
+                          Navigator.pushNamed(
+                            context,
+                            MakeRequestScreen.routeName,
+                            arguments: cubit.hospitals[reversedIndex],
+                          );
+                        },
+                        hospitalModel: cubit.hospitals[reversedIndex],
                       );
                     },
-                    hospitalModel: cubit.hospitals[reversedIndex],
-                  );
-                },
-              ),
-            );
-          },
-          fallback: (BuildContext context) {
-            return Center(
-              child: Text(
-                'لا توجد مستشفيات',
-                style: TextStyles.buttonTextStyle(),
-              ),
-            );
-          },
-        );
+                  ),
+                );
+        }
       },
     );
   }

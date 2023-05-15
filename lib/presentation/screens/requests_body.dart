@@ -30,30 +30,30 @@ class RequestsBody extends StatelessWidget {
           return const Center(
             child: LoadingWidget(),
           );
+        } else {
+          return cubit.userRequests.requestsData.isEmpty
+              ? Center(
+                  child: Text(
+                    'لا توجد تبرعات سابقة',
+                    style: TextStyles.buttonTextStyle(),
+                  ),
+                )
+              : SafeArea(
+                  child: ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.zero,
+                    itemCount: cubit.userRequests.requestsData.length,
+                    itemBuilder: (context, index) {
+                      int reversedIndex =
+                          cubit.userRequests.requestsData.length - 1 - index;
+                      return RequestItem(
+                        requestData:
+                            cubit.userRequests.requestsData[reversedIndex],
+                      );
+                    },
+                  ),
+                );
         }
-        if (state is! LoadingGetAllRequestsState &&
-            cubit.userRequests.requestsData.isEmpty) {
-          return Center(
-            child: Text(
-              'لا توجد تبرعات سابقة',
-              style: TextStyles.buttonTextStyle(),
-            ),
-          );
-        }
-        return SafeArea(
-          child: ListView.builder(
-            physics: const BouncingScrollPhysics(),
-            padding: EdgeInsets.zero,
-            itemCount: cubit.userRequests.requestsData.length,
-            itemBuilder: (context, index) {
-              int reversedIndex =
-                  cubit.userRequests.requestsData.length - 1 - index;
-              return RequestItem(
-                requestData: cubit.userRequests.requestsData[reversedIndex],
-              );
-            },
-          ),
-        );
       },
     );
   }
