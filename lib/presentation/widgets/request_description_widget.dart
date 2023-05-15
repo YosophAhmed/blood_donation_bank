@@ -1,28 +1,28 @@
-import 'package:donation/data/models/hospital_model.dart';
+import 'package:donation/presentation/widgets/custom_card.dart';
 import 'package:donation/presentation/widgets/user_info_row_widget.dart';
 import 'package:flutter/material.dart';
 
+import '../../data/models/user_requests_model.dart';
 import 'animated_icon_row.dart';
-import 'custom_card.dart';
 import 'horizontal_card_divider_widget.dart';
 import 'left_card_side_widget.dart';
 
-class RequestDetailsItem extends StatelessWidget {
-  final HospitalModel hospitalModel;
+class RequestDescription extends StatelessWidget {
+  final RequestData requestData;
 
-  const RequestDetailsItem({
+  const RequestDescription({
     Key? key,
-    required this.hospitalModel,
+    required this.requestData,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CustomCard(
-      height: 500,
+      height: MediaQuery.of(context).size.height,
       widget: Row(
         children: [
           LeftCardSide(
-            bloodGroups: hospitalModel.bloodGroup,
+            bloodGroups: requestData.hospitalModel.bloodGroup,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(
@@ -38,35 +38,33 @@ class RequestDetailsItem extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 10.0,
-                vertical: 12.0,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    'مستشفى ${hospitalModel.hospitalName}',
+                    'مستشفى ${requestData.hospitalModel.hospitalName}',
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                     ),
                     textDirection: TextDirection.rtl,
-                    textAlign: TextAlign.start,
                   ),
                   UserInfoRowWidget(
-                    text: hospitalModel.postDateTime
+                    text: requestData.hospitalModel.postDateTime
                         .substring(0, 16)
                         .replaceRange(10, 11, '   '),
                     icon: Icons.access_time_outlined,
                   ),
                   const HorizontalCardDivider(),
                   UserInfoRowWidget(
-                    text: hospitalModel.hospitalPhone,
+                    text: requestData.hospitalModel.hospitalPhone,
                     icon: Icons.phone_enabled_outlined,
                   ),
                   UserInfoRowWidget(
-                    text: hospitalModel.hospitalAddress,
+                    text: requestData.hospitalModel.hospitalAddress,
                     icon: Icons.location_on_outlined,
                   ),
                   const HorizontalCardDivider(),
@@ -75,21 +73,35 @@ class RequestDetailsItem extends StatelessWidget {
                     icon: Icons.circle_outlined,
                   ),
                   UserInfoRowWidget(
-                    text: 'من الساعة ${hospitalModel.fromHour}',
+                    text: 'من الساعة ${requestData.hospitalModel.fromHour}',
                     icon: Icons.timer,
                   ),
                   UserInfoRowWidget(
-                    text: 'الى الساعة ${hospitalModel.toHour}',
+                    text: 'الى الساعة ${requestData.hospitalModel.toHour}',
                     icon: Icons.timer_outlined,
                   ),
                   const HorizontalCardDivider(),
                   UserInfoRowWidget(
-                    text: 'رقم الطابق ${hospitalModel.floorNumber}',
+                    text: 'رقم الطابق ${requestData.hospitalModel.floorNumber}',
                     icon: Icons.view_list_outlined,
                   ),
                   UserInfoRowWidget(
-                    text: 'رقم الغرفة ${hospitalModel.roomNumber}',
+                    text: 'رقم الغرفة ${requestData.hospitalModel.roomNumber}',
                     icon: Icons.view_list_outlined,
+                  ),
+                  const HorizontalCardDivider(),
+                  UserInfoRowWidget(
+                    text: requestData.details,
+                    icon: Icons.description_outlined,
+                  ),
+                  const HorizontalCardDivider(),
+                  const AnimatedIconRow(
+                    text: 'حالة الطلب',
+                    icon: Icons.circle_outlined,
+                  ),
+                  UserInfoRowWidget(
+                    text: requestData.donateStatus,
+                    icon: Icons.timelapse,
                   ),
                 ],
               ),
