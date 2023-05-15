@@ -21,6 +21,11 @@ class MakeRequestCubit extends Cubit<MakeRequestState> {
     required String postId,
   }) async {
     emit(LoadingMakeRequestState());
+    await Future.delayed(
+      const Duration(
+        seconds: 3,
+      ),
+    );
     try {
       final response = await http.post(
         Uri.parse('${AppStrings.makeRequestUrl}$postId'),

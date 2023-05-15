@@ -2,10 +2,10 @@ import 'package:donation/core/styles/text_styles.dart';
 import 'package:donation/core/widgets/loading_widget.dart';
 import 'package:donation/presentation/manger/home_manger/home_cubit.dart';
 import 'package:donation/presentation/manger/home_manger/home_states.dart';
+import 'package:donation/presentation/widgets/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../core/widgets/error_widget.dart';
 import '../widgets/request_item_widget.dart';
 
 class RequestsBody extends StatelessWidget {
@@ -16,10 +16,22 @@ class RequestsBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HomeCubit, HomeState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is ErrorGetAllRequestsState) {
+          showCustomSnackBar(
+            context: context,
+            message: 'لقد حدث خطأ',
+          );
+        }
+      },
       builder: (context, state) {
         var cubit = BlocProvider.of<HomeCubit>(context);
-        if (state is SuccessGetAllRequestsState &&
+        if (state is LoadingGetAllRequestsState) {
+          return const Center(
+            child: LoadingWidget(),
+          );
+        }
+        if (state is! LoadingGetAllRequestsState &&
             cubit.userRequests.requestsData.isEmpty) {
           return Center(
             child: Text(
@@ -27,31 +39,21 @@ class RequestsBody extends StatelessWidget {
               style: TextStyles.buttonTextStyle(),
             ),
           );
-        } else if (state is ErrorGetAllRequestsState) {
-          return Center(
-            child: CustomErrorWidget(
-              onPressed: () {},
-            ),
-          );
-        } else if (state is LoadingGetAllRequestsState) {
-          return const Center(
-            child: LoadingWidget(),
-          );
-        } else {
-          return SafeArea(
-            child: ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              padding: EdgeInsets.zero,
-              itemCount: cubit.userRequests.requestsData.length,
-              itemBuilder: (context, index) {
-                int reversedIndex = cubit.userRequests.requestsData.length - 1 - index;
-                return RequestItem(
+        }
+        return SafeArea(
+          child: ListView.builder(
+            physics: const BouncingScrollPhysics(),
+            padding: EdgeInsets.zero,
+            itemCount: cubit.userRequests.requestsData.length,
+            itemBuilder: (context, index) {
+              int reversedIndex =
+                  cubit.userRequests.requestsData.length - 1 - index;
+              return RequestItem(
                 requestData: cubit.userRequests.requestsData[reversedIndex],
               );
-              },
-            ),
-          );
-        }
+            },
+          ),
+        );
       },
     );
   }

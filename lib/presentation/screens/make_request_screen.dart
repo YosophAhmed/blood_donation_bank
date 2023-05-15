@@ -59,7 +59,7 @@ class MakeRequestScreen extends StatelessWidget {
                   if (state is ErrorMakeRequestState) {
                     showCustomSnackBar(
                       context: context,
-                      message: state.errorMessage,
+                      message: 'لقد حدث خطأ',
                     );
                   }
                 },

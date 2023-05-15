@@ -45,6 +45,7 @@ dependencies:
   dartz:
   http: ^0.13.6
   json_annotation:
+  conditional_builder_null_safety:
 
 dev_dependencies:
 
