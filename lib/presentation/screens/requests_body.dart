@@ -1,5 +1,4 @@
 import 'package:donation/core/styles/text_styles.dart';
-import 'package:donation/core/widgets/loading_widget.dart';
 import 'package:donation/presentation/manger/home_manger/home_cubit.dart';
 import 'package:donation/presentation/manger/home_manger/home_states.dart';
 import 'package:donation/presentation/widgets/custom_snackbar.dart';
@@ -26,34 +25,28 @@ class RequestsBody extends StatelessWidget {
       },
       builder: (context, state) {
         var cubit = BlocProvider.of<HomeCubit>(context);
-        if (state is LoadingGetAllRequestsState) {
-          return const Center(
-            child: LoadingWidget(),
-          );
-        } else {
-          return cubit.userRequests.requestsData.isEmpty
-              ? Center(
-                  child: Text(
-                    'لا توجد تبرعات سابقة',
-                    style: TextStyles.buttonTextStyle(),
-                  ),
-                )
-              : SafeArea(
-                  child: ListView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.zero,
-                    itemCount: cubit.userRequests.requestsData.length,
-                    itemBuilder: (context, index) {
-                      int reversedIndex =
-                          cubit.userRequests.requestsData.length - 1 - index;
-                      return RequestItem(
-                        requestData:
-                            cubit.userRequests.requestsData[reversedIndex],
-                      );
-                    },
-                  ),
-                );
-        }
+        return cubit.userRequests.requestsData.isEmpty
+            ? Center(
+                child: Text(
+                  'لا توجد تبرعات سابقة',
+                  style: TextStyles.buttonTextStyle(),
+                ),
+              )
+            : SafeArea(
+                child: ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.zero,
+                  itemCount: cubit.userRequests.requestsData.length,
+                  itemBuilder: (context, index) {
+                    int reversedIndex =
+                        cubit.userRequests.requestsData.length - 1 - index;
+                    return RequestItem(
+                      requestData:
+                          cubit.userRequests.requestsData[reversedIndex],
+                    );
+                  },
+                ),
+              );
       },
     );
   }

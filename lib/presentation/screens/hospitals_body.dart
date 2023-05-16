@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/styles/text_styles.dart';
-import '../../core/widgets/loading_widget.dart';
 import '../widgets/hospital_item_widget.dart';
 import 'make_request_screen.dart';
 
@@ -27,39 +26,33 @@ class HospitalsBody extends StatelessWidget {
       },
       builder: (context, state) {
         var cubit = BlocProvider.of<HomeCubit>(context);
-        if (state is LoadingGetAllHospitalsState) {
-          return const Center(
-            child: LoadingWidget(),
-          );
-        } else {
-          return cubit.hospitals.isEmpty
-              ? Center(
-                  child: Text(
-                    'لا توجد مستشفيات',
-                    style: TextStyles.buttonTextStyle(),
-                  ),
-                )
-              : SafeArea(
-                  child: ListView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: cubit.hospitals.length,
-                    padding: EdgeInsets.zero,
-                    itemBuilder: (context, index) {
-                      int reversedIndex = cubit.hospitals.length - 1 - index;
-                      return HospitalItem(
-                        onPressed: () {
-                          Navigator.pushNamed(
-                            context,
-                            MakeRequestScreen.routeName,
-                            arguments: cubit.hospitals[reversedIndex],
-                          );
-                        },
-                        hospitalModel: cubit.hospitals[reversedIndex],
-                      );
-                    },
-                  ),
-                );
-        }
+        return cubit.hospitals.isEmpty
+            ? Center(
+                child: Text(
+                  'لا توجد مستشفيات',
+                  style: TextStyles.buttonTextStyle(),
+                ),
+              )
+            : SafeArea(
+                child: ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: cubit.hospitals.length,
+                  padding: EdgeInsets.zero,
+                  itemBuilder: (context, index) {
+                    int reversedIndex = cubit.hospitals.length - 1 - index;
+                    return HospitalItem(
+                      onPressed: () {
+                        Navigator.pushNamed(
+                          context,
+                          MakeRequestScreen.routeName,
+                          arguments: cubit.hospitals[reversedIndex],
+                        );
+                      },
+                      hospitalModel: cubit.hospitals[reversedIndex],
+                    );
+                  },
+                ),
+              );
       },
     );
   }

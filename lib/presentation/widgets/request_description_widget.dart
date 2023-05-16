@@ -53,7 +53,7 @@ class RequestDescription extends StatelessWidget {
                     textDirection: TextDirection.rtl,
                   ),
                   UserInfoRowWidget(
-                    text: requestData.hospitalModel.postDateTime
+                    text: requestData.updatedAt
                         .substring(0, 16)
                         .replaceRange(10, 11, '   '),
                     icon: Icons.access_time_outlined,
