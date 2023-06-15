@@ -8,6 +8,7 @@ import 'package:geocoding/geocoding.dart';
 
 import '../../../../../../core/constants/app_strings.dart';
 import '../../../../data/data_source/local/cache_helper.dart';
+import '../../../../data/models/ValidationErrorModel.dart';
 import '../../../../data/models/auth/user_sign.dart';
 import '../../../../data/models/user_model.dart';
 
@@ -147,6 +148,15 @@ class RegisterCubit extends Cubit<RegisterState> {
             userData: UserSignUp.fromJson(jsonDecode(response.body)),
           ),
         );
+      } else if (response.statusCode == 400) {
+        emit(
+          ErrorRegisterState(
+            errorMessage:
+                ValidationErrorModel.fromJson(jsonDecode(response.body))
+                    .errors[0]
+                    .msg,
+          ),
+        );
       } else if (response.statusCode == 500) {
         emit(
           ErrorRegisterState(
@@ -156,7 +166,7 @@ class RegisterCubit extends Cubit<RegisterState> {
       } else {
         emit(
           ErrorRegisterState(
-            errorMessage: 'خطأ فى البيانات',
+            errorMessage: 'لقد حدث خطأ',
           ),
         );
       }
@@ -164,7 +174,7 @@ class RegisterCubit extends Cubit<RegisterState> {
       if (error is TimeoutException) {
         emit(
           ErrorRegisterState(
-            errorMessage: 'خطأ فى الخادم حاول مرة أخرى',
+            errorMessage: 'حاول مرة أخرى',
           ),
         );
       } else {

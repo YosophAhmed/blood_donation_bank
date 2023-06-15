@@ -60,7 +60,7 @@ class LoginCubit extends Cubit<LoginState> {
       } else {
         emit(
           ErrorLoginState(
-            errorMessage: 'خطأ فى البيانات',
+            errorMessage: 'لقد حدث خطأ',
           ),
         );
       }
@@ -68,7 +68,7 @@ class LoginCubit extends Cubit<LoginState> {
       if (error is TimeoutException) {
         emit(
           ErrorLoginState(
-            errorMessage: 'خطأ فى الخادم حاول مرة أخرى',
+            errorMessage: 'حاول مرة أخرى',
           ),
         );
       } else {
