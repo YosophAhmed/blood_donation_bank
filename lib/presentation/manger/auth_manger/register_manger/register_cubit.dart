@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:donation/presentation/manger/auth_manger/register_manger/register_states.dart';
@@ -11,8 +12,6 @@ import '../../../../data/models/auth/user_sign.dart';
 import '../../../../data/models/user_model.dart';
 
 import 'package:http/http.dart' as http;
-
-
 
 class RegisterCubit extends Cubit<RegisterState> {
   RegisterCubit() : super(InitialRegisterState());
@@ -114,25 +113,30 @@ class RegisterCubit extends Cubit<RegisterState> {
 
   Future<void> signUp() async {
     emit(LoadingRegisterState());
+    const timeOutDuration = Duration(
+      seconds: 9,
+    );
     try {
-      final response = await http.post(
-        Uri.parse(AppStrings.signUpUrl),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(
-          <String, dynamic>{
-            'name': userModel.name,
-            'email': userModel.email,
-            'password': userModel.password,
-            'phone': userModel.phone,
-            'nationalID': userModel.nationalId,
-            'birthDate': userModel.birthDate,
-            'bloodType': userModel.bloodGroup,
-            'location': userModel.location,
-          },
-        ),
-      );
+      final response = await http
+          .post(
+            Uri.parse(AppStrings.signUpUrl),
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: jsonEncode(
+              <String, dynamic>{
+                'name': userModel.name,
+                'email': userModel.email,
+                'password': userModel.password,
+                'phone': userModel.phone,
+                'nationalID': userModel.nationalId,
+                'birthDate': userModel.birthDate,
+                'bloodType': userModel.bloodGroup,
+                'location': userModel.location,
+              },
+            ),
+          )
+          .timeout(timeOutDuration);
       if (response.statusCode == 201) {
         CacheHelper.saveCacheData(
           key: 'token',
@@ -157,11 +161,19 @@ class RegisterCubit extends Cubit<RegisterState> {
         );
       }
     } catch (error) {
-      emit(
-        ErrorRegisterState(
-          errorMessage: 'لقد حدث خطأ',
-        ),
-      );
+      if (error is TimeoutException) {
+        emit(
+          ErrorRegisterState(
+            errorMessage: 'خطأ فى الخادم حاول مرة أخرى',
+          ),
+        );
+      } else {
+        emit(
+          ErrorRegisterState(
+            errorMessage: 'لقد حدث خطأ',
+          ),
+        );
+      }
     }
   }
 }

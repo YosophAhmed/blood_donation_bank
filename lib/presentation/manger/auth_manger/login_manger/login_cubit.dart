@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:donation/data/data_source/local/cache_helper.dart';
@@ -16,19 +17,24 @@ class LoginCubit extends Cubit<LoginState> {
 
   Future<void> signIn() async {
     emit(LoadingLoginState());
+    const timeOutDuration = Duration(
+      seconds: 9,
+    );
     try {
-      final response = await http.post(
-        Uri.parse(AppStrings.loginUrl),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(
-          <String, dynamic>{
-            'email': userMail,
-            'password': userPassword,
-          },
-        ),
-      );
+      final response = await http
+          .post(
+            Uri.parse(AppStrings.loginUrl),
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: jsonEncode(
+              <String, dynamic>{
+                'email': userMail,
+                'password': userPassword,
+              },
+            ),
+          )
+          .timeout(timeOutDuration);
       if (response.statusCode == 201 || response.statusCode == 200) {
         CacheHelper.saveCacheData(
           key: 'token',
@@ -59,11 +65,19 @@ class LoginCubit extends Cubit<LoginState> {
         );
       }
     } catch (error) {
-      emit(
-        ErrorLoginState(
-          errorMessage: 'لقد حدث خطأ',
-        ),
-      );
+      if (error is TimeoutException) {
+        emit(
+          ErrorLoginState(
+            errorMessage: 'خطأ فى الخادم حاول مرة أخرى',
+          ),
+        );
+      } else {
+        emit(
+          ErrorLoginState(
+            errorMessage: 'لقد حدث خطأ',
+          ),
+        );
+      }
     }
   }
 }
